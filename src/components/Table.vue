@@ -1,5 +1,5 @@
 <template>
-  <div class="p-6 bg-red-900 rounded-lg">
+  <div class="p-6 bg-blue-900 rounded-lg">
     <div class="flex justify-between items-center pb-4">
       <h2 class="text-xl font-semibold leading-loose text-white">Order Report</h2>
       <button class="flex py-3 px-4 rounded-lg border border-gray-200 gap-x-2.5">

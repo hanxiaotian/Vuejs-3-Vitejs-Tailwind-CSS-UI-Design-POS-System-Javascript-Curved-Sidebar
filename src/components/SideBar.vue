@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col gap-y-4 items-center py-8 w-24 bg-red-900">
-    <button class="p-2 bg-opacity-10 text-gray-200 rounded-xl bg-white">
-      <FoodIcon />
-    </button>
+  <div class="flex flex-col gap-y-4 items-center py-8 w-24 bg-blue-900 h-full">
+    <!-- <button class="p-2 bg-opacity-10 text-gray-200 rounded-xl bg-white">
+      <ShoppingIcon />
+    </button> -->
     <div class="flex flex-col gap-y-2 items-end self-end">
         <div v-for="menu in menus"
         :class="
@@ -13,8 +13,8 @@
         >
         <button class="p-4 my-2 mr-4 ml-3 rounded-xl" @click="activeMenu = menu.name"
         :class="activeMenu === menu.name
-        ? 'text-white shadow-error bg-red-900'
-        : 'text-red-300'">
+        ? 'text-white shadow-error bg-blue-900'
+        : 'text-blue-300'">
         <Component :is="menu.icon" class="w-6 h-6" />
         </button>
         </div>
@@ -24,24 +24,13 @@
 
 <script setup>
 import { ref } from "vue";
-import FoodIcon  from "../icons/food.svg";
-import HomeIcon from "../icons/home.svg";
 import ShoppingIcon from "../icons/shopping.svg";
-import GraphIcon from "../icons/graph.svg";
-import MessageIcon from "../icons/message.svg";
-import NotificationIcon from "../icons/notification.svg";
-import SettingsIcon from "../icons/settings.svg";
-import LogoutIcon from "../icons/logout.svg";
+import OptionsIcon from "../icons/options.svg";
 
 const activeMenu = ref("Graph");
 
 const menus = [
-  { name: "Dashboard", icon: HomeIcon },
   { name: "Shopping", icon: ShoppingIcon },
-  { name: "Graph", icon: GraphIcon },
-  { name: "Messages", icon: MessageIcon },
-  { name: "Notifications", icon: NotificationIcon },
-  { name: "Settings", icon: SettingsIcon },
-  { name: "Logout", icon: LogoutIcon },
+  { name: "Options", icon: OptionsIcon },
 ];
 </script>
