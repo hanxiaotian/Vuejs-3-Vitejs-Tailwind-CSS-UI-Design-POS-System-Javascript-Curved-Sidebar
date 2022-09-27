@@ -1,9 +1,7 @@
 <template>
-    <div class="flex flex-col justify-between">
+    <div v-if="loaded" class="flex flex-col justify-between">
         <div class="flex place-content-center">
-            <transition>
-                <img class="w-80 h-auto" :src="receivedImage.src"/>
-            </transition>
+            <img class="w-80 h-auto" :src="base64Image"/>
         </div>
         <div class="flex flex-col items-center">
             <button class="w-64 p-3 my-1 rounded-lg bg-blue-900 border border-white text-white text-sm font-semibold"
@@ -27,6 +25,7 @@
             </button>
         </div>
     </div>
+    <div v-if="!loaded" class="flex flex-col justify-between items-center">Loading...</div>
 </template>
   
 <script setup>
@@ -41,11 +40,16 @@ const router = useRouter();
 const cart = useCartStore();
 
 function addToCart(productName) {
-    const item = products.productList.find(product => product.name === productName);
-    cart.addItem(item);
+    if (productName != "Empty") {
+        const item = products.productList.find(product => product.name === productName);
+        cart.addItem(item);
+    } else {
+        throw new Error("Cannot add Empty to cart");
+    }
 }
 
 function selectAndReturnHome(productName) {
+    console.log(productName);
     addToCart(productName);
     store.currentState = store.appStates.isScan;
     router.push({
@@ -53,7 +57,7 @@ function selectAndReturnHome(productName) {
     });
 }
 
-
+const loaded = ref(false);
 const showFourResults = ref(true);
 
 const top1PredName = ref("");
@@ -64,7 +68,7 @@ const top3PredName = ref("");
 const top3PredConf = ref(0);
 const top4PredName = ref("");
 const top4PredConf = ref(0);
-const receivedImage = reactive(new Image());
+const base64Image = ref("");
 
 async function getPrediction() {
     const res = await fetch("/api/inference", {
@@ -81,35 +85,18 @@ async function getPrediction() {
         top3PredConf.value = data.results[2].confidence;
         top4PredName.value = data.results[3].name;
         top4PredConf.value = data.results[3].confidence;
-        receivedImage.src = data.image;
-        // console.log(top1PredName.value);
-        // receivedImage.onload = function () {
-        //     if (receivedImage.height === 0 || receivedImage.width === 0) {
-        //         console.log("Image is not loaded yet");
-        //         return;
-        //     }
-        //     console.log("Image is loaded");
-        //     console.log(receivedImage.height, 'x', receivedImage.width);
-        // };
+        base64Image.value = data.image;
+        loaded.value = true;
     }else{
-        throw new Error("Error getting prediction");
+        throw new Error("Prediction result is wrong");
     }
 }
 
 function init() {
-    console.log(store.currentState);
     if (store.currentState == store.appStates.isAutoRecog) {
         getPrediction();
-        receivedImage.onload = function () {
-            if (receivedImage.height === 0 || receivedImage.width === 0) {
-                console.log("Image is not loaded yet");
-                return;
-            }
-            console.log("Image is loaded");
-            console.log(receivedImage.height, 'x', receivedImage.width);
-        };
     }else{
-        // throw new Error("State not aligned");
+        throw new Error("State not aligned");
     }
 }
 

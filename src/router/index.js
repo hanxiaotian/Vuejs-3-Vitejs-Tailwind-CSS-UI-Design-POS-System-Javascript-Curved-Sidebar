@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from "../views/Home.vue";
 import PredictionPage from "../views/PredictionPage.vue";
 import Search from "../views/Search.vue";
+import Setting from "../views/Setting.vue";
 
 const routes = [
     {
@@ -28,6 +29,15 @@ const routes = [
         component: Search,
         meta: {
             title: "Search",
+            auth: false,
+        },
+    },
+    {
+        path: "/setting",
+        name: "Setting",
+        component: Setting,
+        meta: {
+            title: "Setting",
             auth: false,
         },
     },

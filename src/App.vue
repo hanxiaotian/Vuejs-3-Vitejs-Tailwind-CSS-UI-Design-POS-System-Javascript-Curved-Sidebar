@@ -10,7 +10,6 @@
         </header>
         <hr class="border-blue-700">
       </div>
-      <!-- <Screen /> -->
       <router-view />
       <div>
         <Buttons />
@@ -25,5 +24,4 @@
   import SideBar from "./components/SideBar.vue";
   import RightSideBar from "./components/RightSideBar.vue";
   import Buttons from "./components/Buttons.vue";
-  // import Screen from "./components/Screen.vue";
 </script>
