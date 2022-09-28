@@ -1,7 +1,7 @@
 <template>
     <div v-if="loaded" class="flex flex-col justify-between">
         <div class="flex place-content-center">
-            <img class="w-80 h-auto" :src="base64Image"/>
+            <img class="w-1/2 h-auto" :src="base64Image"/>
         </div>
         <div class="flex flex-col items-center">
             <button class="w-64 p-3 my-1 rounded-lg bg-blue-900 border border-white text-white text-sm font-semibold"
@@ -49,9 +49,9 @@ function addToCart(productName) {
 }
 
 function selectAndReturnHome(productName) {
-    console.log(productName);
     addToCart(productName);
     store.currentState = store.appStates.isScan;
+    loaded.value = false;
     router.push({
         name: "Home",
     });
@@ -71,7 +71,6 @@ const top4PredConf = ref(0);
 const base64Image = ref("");
 
 async function getPrediction() {
-    console.log("Getting prediction");
     const res = await fetch("/api/inference", {
         method: "GET",
     });

@@ -6,11 +6,12 @@
                 @mouseup="handleMouseUp()"
                 @mousemove="handleMouseMove($event)">
             </canvas>
-            <div v-if="!loaded">Loading...</div>
         </div>
+        <input class="gap-y-2 p-3 bg-opacity-80 border border-solid border-black/12 rounded-lg bg-white" 
+                type="text" v-model="rtspURL" placeholder="Please input RTSP stream URL.."/>
         <div class="flex flex-col items-center">
             <button class="w-40 p-2 my-1 rounded-lg bg-blue-900 border border-white text-white text-sm font-semibold"
-                @click="">
+                @click="submitROI()">
                 Submit ROI
             </button>
         </div>
@@ -18,7 +19,7 @@
 </template>
   
 <script setup>
-import { ref, reactive, computed, nextTick, onMounted, onBeforeMount, defineComponent } from "vue";
+import { ref, reactive, nextTick, onMounted, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -101,13 +102,6 @@ const rect = reactive({
     w: 0,
     h: 0
 });
-// const currentMouse = computed(() => {
-//     var rect = myCanvas.value.getBoundingClientRect();
-//     return {
-//         x: this.mouse.current.x - rect.left,
-//         y: this.mouse.current.y - rect.top
-//     };
-// });
 function draw() {
     if (mouse.down ) {
         myCanvasContext.value.drawImage(background, 0, 0, size.w, size.h);
@@ -122,7 +116,6 @@ function handleMouseDown(event) {
         x: event.offsetX,
         y: event.offsetY
     }
-    console.log(event.offsetX, event.offsetY);
     rect.startX = mouse.current.x;
     rect.startY = mouse.current.y;
 }
@@ -139,5 +132,26 @@ function handleMouseMove(event) {
         rect.h = (mouse.current.y - rect.startY);
         draw();
     }
+}
+
+const rtspURL = ref("");
+
+async function submitROI() {
+    const roi = {
+        startX: rect.startX / size.w,
+        startY: rect.startY / size.h,
+        w: rect.w / size.w,
+        h: rect.h / size.h
+    }
+    const response = await fetch("/api/setting", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            rtspURL: rtspURL.value,
+            ROI: roi
+        })
+    });
 }
 </script>

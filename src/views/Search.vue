@@ -49,6 +49,5 @@ function selectAndReturnHome(productName) {
     router.push({
         name: "Home",
     });
-    console.log(cart.items);
 }
 </script>
