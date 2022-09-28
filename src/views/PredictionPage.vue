@@ -29,7 +29,7 @@
 </template>
   
 <script setup>
-import { ref, reactive } from "vue";
+import { ref, onBeforeMount } from "vue";
 import { useRouter } from "vue-router";
 import store from "../store/index";
 import products from "../store/products";
@@ -71,6 +71,7 @@ const top4PredConf = ref(0);
 const base64Image = ref("");
 
 async function getPrediction() {
+    console.log("Getting prediction");
     const res = await fetch("/api/inference", {
         method: "GET",
     });
@@ -100,5 +101,7 @@ function init() {
     }
 }
 
-init();
+onBeforeMount(() => {
+    init();
+});
 </script>
