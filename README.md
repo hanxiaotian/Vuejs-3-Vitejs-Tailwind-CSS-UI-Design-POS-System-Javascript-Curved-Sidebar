@@ -14,10 +14,10 @@ cd my-project
 
 npm install
 
-npm i vite-svg-loader
+<!-- npm i vite-svg-loader
 
-npm install -D tailwindcss postcss autoprefixer
+npm i tailwindcss postcss autoprefixer
 
-npx tailwindcss init -p
+npx tailwindcss init -p -->
 
 npm run dev

@@ -91,10 +91,12 @@ async function getItems() {
     items.forEach(item => {
         queuedItems.push(item);
     });
-    console.log(queuedItems);
+    
+    setTimeout(getItems, 10000);
 }
 
-setInterval(getItems, 10000);
+// setInterval(getItems, 10000);
+getItems();
 
 async function removeItem(itemName) {
     const response = await fetch("/api/offline_process/" + itemName, {
