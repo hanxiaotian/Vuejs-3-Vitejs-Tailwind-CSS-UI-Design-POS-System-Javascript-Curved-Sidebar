@@ -3,6 +3,7 @@ import Home from "../views/Home.vue";
 import PredictionPage from "../views/PredictionPage.vue";
 import Search from "../views/Search.vue";
 import Setting from "../views/Setting.vue";
+import OfflineProcess from "../views/OfflineProcess.vue";
 
 const routes = [
     {
@@ -38,6 +39,15 @@ const routes = [
         component: Setting,
         meta: {
             title: "Setting",
+            auth: false,
+        },
+    },
+    {
+        path: "/offline_process",
+        name: "OfflineProcess",
+        component: OfflineProcess,
+        meta: {
+            title: "OfflineProcess",
             auth: false,
         },
     },

@@ -18,6 +18,13 @@ export default defineConfig({
         secure: false,      
         ws: true,
       },
+      '/api/offline_process': {
+        // target: 'http://localhost:5000',
+        target: 'https://schwarzfandvtool.azurewebsites.net',
+        changeOrigin: true,
+        secure: false,      
+        ws: true,
+      },
     }
   }
 })
